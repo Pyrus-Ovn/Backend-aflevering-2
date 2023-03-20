@@ -4,7 +4,7 @@ using Backend_aflevering_2.Models;
 
 namespace Backend_aflevering_2.Models
 {
-    public partial class JobDto
+    public partial class JobExpensesDto
     {
         public long JobId { get; set; }
         public string? Customer { get; set; }
@@ -12,7 +12,6 @@ namespace Backend_aflevering_2.Models
         public int Days { get; set; }
         public string? Location { get; set; }
         public string? Comments { get; set; }
-        public List<Model>? Models { get; set; }
-
+       
     }
 }

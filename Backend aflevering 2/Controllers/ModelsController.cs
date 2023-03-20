@@ -26,7 +26,8 @@ namespace Backend_aflevering_2.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Model>>> GetModel()
         {
-            return await _context.Model.ToListAsync();
+            var dbModel = await _context.Model.ToListAsync();
+            return Ok(dbModel.Adapt<List<ModelDto>>());
         }
 
         // GET: api/Models/5
@@ -34,13 +35,16 @@ namespace Backend_aflevering_2.Controllers
         public async Task<ActionResult<SpecificModelDto>> GetModel(long id)
         {
 
-            Model m = await _context.Model.FindAsync(id);
+            var model = await _context.Model
+                .Include(x => x.Jobs)
+                .Include(x => x.Expenses)
+                .FirstOrDefaultAsync(x => x.ModelId == id);
 
-            SpecificModelDto mDto = m.Adapt<SpecificModelDto>();
+            SpecificModelDto mDto = model.Adapt<SpecificModelDto>();
 
 
 
-            if (m == null)
+            if (model == null)
             {
                 return NotFound();
             }

@@ -26,12 +26,22 @@ namespace Backend_aflevering_2.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Job>>> GetJob()
         {
-            return await _context.Job.ToListAsync();
+            // get all jobs from db
+            var dbJobs = await _context.Job.ToListAsync();
+
+            dbJobs.ForEach(async j => await _context.Entry(j)
+                .Collection(j => j.Models)
+                .LoadAsync());
+
+
+            
+
+            return Ok(dbJobs.Adapt<JobDto>());
         }
 
         // GET: api/Jobs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Job>> GetJob(long id)
+        public async Task<ActionResult<JobExpensesDto>> GetJob(long id)
         {
             var job = await _context.Job
                
@@ -43,7 +53,7 @@ namespace Backend_aflevering_2.Controllers
                 return NotFound();
             }
 
-            return job;
+            return job.Adapt<JobExpensesDto>();
         }
 
 
@@ -52,7 +62,7 @@ namespace Backend_aflevering_2.Controllers
         [HttpGet("Model/{modelId}")]
 
 
-        public async Task<ActionResult<Model>> GetJobsByModel(long modelId)
+        public async Task<ActionResult<ModelJobsDto>> GetJobsByModel(long modelId)
         {
 
             var model = await _context.Model
@@ -64,7 +74,7 @@ namespace Backend_aflevering_2.Controllers
                 return NotFound();
             }
 
-            return model;
+            return model.Adapt<ModelJobsDto>();
 
         }
 
