@@ -14,17 +14,6 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 //fix
 
-//sus
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
 // Add services to the container.
 
 builder.Services.AddSignalR();
