@@ -12,14 +12,13 @@ builder.Services.AddDbContext<Backend_aflevering_2Context>(opt =>
     opt.UseInMemoryDatabase("TodoList"));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//fix
-
 // Add services to the container.
 
 builder.Services.AddSignalR();
 builder.Services.AddRazorPages();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
+    //fix
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
